@@ -10,6 +10,6 @@ namespace TaskApi
         }
 
 
-        public DbSet<TaskApi.Models.Task> Tasks { get; set; }
+        public DbSet<TaskApi.Models.TaskEntity> Tasks { get; set; }
     }
 }

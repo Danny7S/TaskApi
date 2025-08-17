@@ -21,7 +21,7 @@ namespace TaskApi.Controllers
             _service = service;
         }
 
-
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<List<Models.TaskEntity>>> GetAllTasks()
         {
@@ -30,7 +30,9 @@ namespace TaskApi.Controllers
             return Ok(tasks);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
+
         public async Task<ActionResult<TaskEntityDTO>> GetByIdTask(int id)
         {
             var task = await _service.GetByIdTask(id);
@@ -41,12 +43,8 @@ namespace TaskApi.Controllers
             return Ok(task);
         }
 
-
-        //--------------------------------------------------------------------------------------------
-
-
         [HttpPost]
-        //[Authorize(Roles = "User, Admin")]
+        [Authorize(Roles = "User, Admin")]
         public async Task<ActionResult<CreateTaskDTO>> CreateTask([FromBody] CreateTaskDTO createTask)
         {
             if (createTask == null)
@@ -58,8 +56,7 @@ namespace TaskApi.Controllers
         }
 
 
-
-
+        [Authorize(Roles ="User")]
         [HttpPut]
         public async Task<ActionResult<UpdateTaskDTO>> UpdateTask([FromBody] UpdateTaskDTO task)
         {
@@ -82,7 +79,7 @@ namespace TaskApi.Controllers
             return Ok(updatedTask);
         }
 
-
+        [Authorize(Roles ="User,Admin")]
         [HttpDelete("{id}")]
 
         public async Task<IActionResult> DeleteTask(int id)

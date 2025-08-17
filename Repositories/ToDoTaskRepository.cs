@@ -71,17 +71,9 @@ namespace TaskApi.Repositories
 
         public async Task<UpdateTaskDTO> UpdateTask(UpdateTaskDTO task)
         {
-            //if (task is null)
-            //{
-            //    throw new ArgumentNullException(nameof(task), "The input task data cannot be null.");
-            //}
 
             var tempData = await _context.Tasks.FindAsync(task.Id);
 
-            //if (tempData is null)
-            //{
-            //    throw new InvalidOperationException("No task with the given id found!");
-            //}
 
             tempData.Title = task.Title;
             tempData.Description = task.Description;
@@ -103,10 +95,6 @@ namespace TaskApi.Repositories
         public async Task<TaskEntityDTO> DeleteTaskById(int id)
         {
             var tempData = await _context.Tasks.FindAsync(id);
-            //if (tempData is null)
-            //{
-            //    throw new InvalidOperationException("No task with the given id found!");
-            //}
             var task = new TaskEntityDTO
             {
                 Id = tempData.Id,

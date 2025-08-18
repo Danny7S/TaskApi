@@ -15,7 +15,7 @@ namespace TaskApi
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, "testUser"),
-                new Claim(ClaimTypes.Role, "Admin") // можеш да смениш на User ако искаш
+                new Claim(ClaimTypes.Role, "Admin") 
             };
 
             var token = new JwtSecurityToken(

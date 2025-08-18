@@ -56,28 +56,28 @@ namespace TaskApi.Controllers
         }
 
 
-        [Authorize(Roles ="User")]
+        [Authorize(Roles = "User,Admin")]
         [HttpPut]
         public async Task<ActionResult<UpdateTaskDTO>> UpdateTask([FromBody] UpdateTaskDTO task)
         {
             if (task == null)
-            {
                 return BadRequest("Task cannot be null");
-            }
 
-            var updatedTask = await _service.GetByIdTask(task.Id);
-            updatedTask.Title = task.Title;
-            updatedTask.Description = task.Description; ;
-            updatedTask.IsCompleted = task.IsCompleted;
-            updatedTask.ModifiedAt = task.ModifiedAt;
-
-            if (updatedTask == null)
+            try
             {
-                return NotFound("Task not found");
+                var updatedTask = await _service.UpdateTask(task);
+                return Ok(updatedTask);
             }
-
-            return Ok(updatedTask);
+            catch (InvalidOperationException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
+
 
         [Authorize(Roles ="User,Admin")]
         [HttpDelete("{id}")]
@@ -89,7 +89,7 @@ namespace TaskApi.Controllers
             {
                 return NotFound("Task not found");
             }
-            await _service.DeleteTaskById(task.Id);
+            await _service.DeleteTaskById(id);
             return Ok();
         }
     }

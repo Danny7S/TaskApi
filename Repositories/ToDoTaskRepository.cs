@@ -88,7 +88,7 @@ namespace TaskApi.Repositories
                 Title=task.Title,
                 Description=task.Description,
                 IsCompleted=task.IsCompleted,
-                ModifiedAt=task.ModifiedAt,
+                ModifiedAt=DateTime.UtcNow,
             };
         }
 

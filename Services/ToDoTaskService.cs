@@ -61,14 +61,14 @@ namespace TaskApi.Services
         }
 
         public async Task<TaskEntityDTO> DeleteTaskById(int id)
-        {
-            var tempData= await _taskRepository.DeleteTaskById(id);
+        {   
+            var tempData= await _taskRepository.GetByIdTask(id);
             if (tempData is null)
             {
                 throw new InvalidOperationException("No task with the given id found!");
             }
 
-            return tempData;
+            return await _taskRepository.DeleteTaskById(id);
         }
 
 
